@@ -36,10 +36,6 @@ class _ClockScreenState extends State<ClockScreen> {
 
   // Tạo danh sách các múi giờ
   final Map<String, List<String>> _groupedTimeZones = {
-    'UTC -12:00': [
-      'Pacific/Kwajalein',
-      'Pacific/Eniwetok',
-    ],
     'UTC -11:00': [
       'Pacific/Midway',
       'Pacific/Samoa',
@@ -184,8 +180,7 @@ class _ClockScreenState extends State<ClockScreen> {
   @override
   void initState() {
     super.initState();
-    _selectedLocation =
-        tz.getLocation('Asia/Ho_Chi_Minh'); // Mặc định là Ho_Chi_Minh
+    _selectedLocation = tz.getLocation('Asia/Ho_Chi_Minh');
     _updateDateTime();
     _timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
       _updateDateTime();
@@ -220,6 +215,13 @@ class _ClockScreenState extends State<ClockScreen> {
       _selectedLocation = tz.getLocation(locationName);
       _updateDateTime(); // Cập nhật thời gian ngay sau khi đổi múi giờ
     });
+    void _changeTimeZone(String locationName) {
+      final newLocation = tz.getLocation(locationName);
+      setState(() {
+        _selectedLocation = newLocation;
+        _updateDateTime();
+      });
+    }
   }
 
   @override
@@ -239,15 +241,15 @@ class _ClockScreenState extends State<ClockScreen> {
             Text(
               _timeString,
               style: const TextStyle(
-                fontSize: 72,
+                fontSize: 55,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 0),
             Text(
               _dateString,
-              style: const TextStyle(fontSize: 24, color: Colors.white70),
+              style: const TextStyle(fontSize: 20, color: Colors.white70),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -267,7 +269,7 @@ class _ClockScreenState extends State<ClockScreen> {
               'Time Zone:',
               style: TextStyle(fontSize: 18, color: Colors.white),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 0),
             DropdownButton<String>(
               value: _selectedLocation.name,
               dropdownColor: Colors.black87,
