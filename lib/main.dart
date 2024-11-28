@@ -34,7 +34,7 @@ class _ClockScreenState extends State<ClockScreen> {
   String _dateString = '';
   bool _is24HourFormat = true;
 
-  // Tạo danh sách các múi giờ
+  // các múi giờ
   final Map<String, List<String>> _groupedTimeZones = {
     'UTC -11:00': [
       'Pacific/Midway',
@@ -207,13 +207,13 @@ class _ClockScreenState extends State<ClockScreen> {
     setState(() {
       _is24HourFormat = !_is24HourFormat;
     });
-    _updateDateTime(); // Cập nhật thời gian ngay sau khi thay đổi định dạng
+    _updateDateTime(); // thay đổi định dạng
   }
 
   void _changeTimeZone(String locationName) {
     setState(() {
       _selectedLocation = tz.getLocation(locationName);
-      _updateDateTime(); // Cập nhật thời gian ngay sau khi đổi múi giờ
+      _updateDateTime(); // cập nhật thời gian
     });
     void _changeTimeZone(String locationName) {
       final newLocation = tz.getLocation(locationName);
@@ -297,7 +297,7 @@ class _ClockScreenState extends State<ClockScreen> {
     );
   }
 
-  // Hàm để tùy chỉnh tên hiển thị
+  // chỉnh tên hiển thị
   String _getCustomName(String location) {
     switch (location) {
       case 'Asia/Ho_Chi_Minh':
@@ -310,7 +310,6 @@ class _ClockScreenState extends State<ClockScreen> {
         return 'Tokyo';
       case 'Australia/Sydney':
         return 'Sydney';
-      // Add more custom names for other locations
       default:
         return location.split('/').last.replaceAll('_', ' ');
     }
